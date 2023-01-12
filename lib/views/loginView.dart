@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'dart:developer' as devtools show log;
-
-import 'package:pulley/route.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -16,23 +8,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  late final TextEditingController _email;
-  late final TextEditingController _password;
-
-  @override
-  void initState() {
-    _email = TextEditingController();
-    _password = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _email.dispose();
-    _password.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,9 +62,9 @@ class _LoginViewState extends State<LoginView> {
                   final data = doc_.data() as Map<String, dynamic>;
                   final role = data['role'];
                   devtools.log(role);
-                  if (role == 'Organisation') {
+                  if (role == 'Student') {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      organisationRoute,
+                      studentRoute,
                       (route) => false,
                     );
                   } else if (role == 'Club') {
@@ -97,9 +72,9 @@ class _LoginViewState extends State<LoginView> {
                       clubRoute,
                       (route) => false,
                     );
-                  } else if (role == 'Student') {
+                  } else if (role == 'Organisation') {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      studentRoute,
+                      organisationRoute,
                       (route) => false,
                     );
                   }
@@ -116,14 +91,33 @@ class _LoginViewState extends State<LoginView> {
             },
             child: const Text("Sign in"),
           ),
+          Container(
+            width: 200,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blueGrey,
+                width: 2,
+              ),
+            ),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    registerRoute,
+                    (route) => false,
+                  );
+                },
+                child: const Text("Not Registered? Click Here"),
+              ),
+            ),
+          ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                registerRoute,
-                (route) => false,
-              );
+              FirebaseAuth.instance.signOut();
             },
-            child: const Text("Not Registered? Click Here"),
+            child: const Text('Sign out'),
           ),
         ],
       ),
@@ -150,24 +144,4 @@ roleBased(BuildContext context, User user) {
         }
         return const Text('LOADING...');
       });
-}
-
-Future<bool> showDialogBox(BuildContext context) {
-  return showDialog(
-    context: context,
-    barrierColor: const Color.fromARGB(255, 104, 200, 222),
-    builder: (context) {
-      return AlertDialog(
-          title: const Text("Error"),
-          content: const Text("Username or Password incorrect"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("OK"),
-            ),
-          ]);
-    },
-  ).then((value) => value ?? false);
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "861842226929",
+    "project_id": "pulley-4d7e0",
+    "storage_bucket": "pulley-4d7e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861842226929:android:ecd0de0f08d4c426e6b350",
+        "android_client_info": {
+          "package_name": "com.example.pulley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861842226929-uiciqo6tusjs9fronrmncqtutjd9g8vs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiLc6_nOEFIpA_z4bDgs87ROIyX4nPFuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861842226929-uiciqo6tusjs9fronrmncqtutjd9g8vs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "861842226929-rjdegku4oeva6keg9jitt1nk452drapd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pulley"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

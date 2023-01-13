@@ -1,64 +1,81 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pulley/views/registerView.dart';
+
+import 'dart:developer' as devtools show log;
+
+import 'firebase_options.dart';
+import 'package:pulley/views/loginView.dart';
+import 'package:pulley/route.dart';
 
 void main() {
-  runApp(const LoginView());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    MaterialApp(
+      title: "PulLey App",
+      themeMode: ThemeMode.dark,
+      home: const MyHomePage(),
+      routes: {
+        loginRoute: (context) => const LoginView(),
+        homeRoute: (context) => const PulLey(
+              title: 'This',
+            ),
+        registerRoute: (context) => const RegisterView(),
+      },
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
 
-class PulLey extends StatelessWidget {
-  const PulLey({super.key});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            final user = FirebaseAuth.instance.currentUser;
+            if (user != null) {
+              if (user.emailVerified) {
+                devtools.log("Email is verified");
+              } else {
+                devtools.log(user.toString());
+              }
+            } else {
+              return const LoginView();
+            }
+            return const MyHomePage();
+          default:
+            return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class PulLey extends StatefulWidget {
+  const PulLey({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<PulLey> createState() => _PulLeyState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.black87,
-        ),
-        home: Scaffold(
-            appBar: AppBar(
-          title: const Text("PulLey"),
-        )));
-  }
-}
-
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
-
-  @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
+class _PulLeyState extends State<PulLey> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("PulLey 123"),
+        title: const Text("hello"),
       ),
-      body: 
     );
   }
 }

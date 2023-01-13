@@ -49,7 +49,7 @@ class MyHomePage extends StatelessWidget {
                 devtools.log(user.toString());
               }
             } else {
-              return const LoginView();
+              return const RegisterView();
             }
             return const MyHomePage();
           default:

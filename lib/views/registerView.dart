@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
+
+import '../route.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -10,13 +13,22 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _role;
+  final Map<String, String> _roles = {
+    'student': 'student',
+    'club': 'club',
+    'organisation': 'organisation',
+  };
 
   @override
   void initState() {
+    _username = TextEditingController();
     _email = TextEditingController();
     _password = TextEditingController();
+    _role = TextEditingController();
     super.initState();
   }
 
@@ -24,114 +36,118 @@ class _RegisterViewState extends State<RegisterView> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _role.dispose();
     super.dispose();
   }
+
+  final _formKey = GlobalKey<FormState>();
+  final List<DropdownMenuItem<String>> _dropdownItems = [
+    const DropdownMenuItem(
+      value: 'Student',
+      child: Text('Student'),
+    ),
+    const DropdownMenuItem(
+      value: 'Club',
+      child: Text('Club'),
+    ),
+    const DropdownMenuItem(
+      value: 'Orgaisation',
+      child: Text('Organisation'),
+    ),
+    // Add more options
+  ];
+  String? _selectedValue;
+
+  final CollectionReference rolesCollection =
+      FirebaseFirestore.instance.collection('roles');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("PulLey-Register"),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(
+        title: const Text("PulLey-Register"),
+      ),
+      body: Form(
+        key: _formKey,
+        child: Column(
           children: [
-            TextField(
-              controller: _email,
+            const Text('Name:'),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Name'),
+              validator: (value) {
+                if (value != null && value.isEmpty) {
+                  return 'Please enter a name';
+                }
+                _username.text = value!;
+                return null;
+              },
+            ),
+            const Text('Email Address:'),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Email'),
+              keyboardType: TextInputType.emailAddress,
               enableSuggestions: false,
               autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: "Enter email here",
-                border: OutlineInputBorder(),
-              ),
+              validator: (value) {
+                if (value != null && value.isEmpty) {
+                  return 'Please enter a valid email';
+                }
+                _email.text = value!;
+                return null;
+              },
             ),
-            TextField(
-              controller: _password,
+            const Text('Password:'),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Password',
+              ),
               obscureText: true,
               enableSuggestions: false,
               autocorrect: false,
-              decoration: const InputDecoration(
-                hintText: 'Enter your password here',
-                border: OutlineInputBorder(),
-              ),
+              validator: (value) {
+                if (value != null && value.isEmpty) {
+                  return 'Please enter a strong password';
+                }
+                _password.text = value!;
+                return null;
+              },
+            ),
+            const Text('Role:'),
+            DropdownButton(
+              value: _selectedValue,
+              items: _dropdownItems,
+              onChanged: (value) {
+                setState(() {
+                  _selectedValue = value;
+                  _role.text = value!;
+                });
+              },
             ),
             TextButton(
               onPressed: () async {
+                final username = _username.text;
                 final email = _email.text;
                 final password = _password.text;
+                final role = _role.text;
+
+                final CollectionReference userCollection =
+                    FirebaseFirestore.instance.collection('users');
                 try {
-                  final userCredential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                  devtools.log(userCredential.toString());
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'email-already-in-use') {
-                    devtools.log('Email already registered');
-                  } else if (e.code == 'weak-password') {
-                    devtools.log('Weak Password');
-                  } else if (e.code == "invalid-email") {
-                    devtools.log("Invalid Email Format");
-                  } else {
-                    devtools.log(e.code.toString());
-                  }
+                  await userCollection.add({
+                    'username': username,
+                    'email': email,
+                    'password': password,
+                    'role': role
+                  });
+                } catch (e) {
+                  devtools.log(e.toString());
                 }
               },
-              child: const Text("Register as student"),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  final userCredential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                  devtools.log(userCredential.toString());
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'email-already-in-use') {
-                    devtools.log('Email already registered');
-                  } else if (e.code == 'weak-password') {
-                    devtools.log('Weak Password');
-                  } else if (e.code == "invalid-email") {
-                    devtools.log("Invalid Email Format");
-                  } else {
-                    devtools.log(e.code.toString());
-                  }
-                }
-              },
-              child: const Text("Register as club"),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  final userCredential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                  devtools.log(userCredential.toString());
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'email-already-in-use') {
-                    devtools.log('Email already registered');
-                  } else if (e.code == 'weak-password') {
-                    devtools.log('Weak Password');
-                  } else if (e.code == "invalid-email") {
-                    devtools.log("Invalid Email Format");
-                  } else {
-                    devtools.log(e.code.toString());
-                  }
-                }
-              },
-              child: const Text("Register as organisation"),
+              child: const Text("Register"),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

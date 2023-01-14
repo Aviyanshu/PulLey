@@ -82,10 +82,10 @@ class _LoginViewState extends State<LoginView> {
                     password: password,
                   );
                   await FirebaseAuth.instance.signOut();
-                  /*Navigator.of(context).pushNamedAndRemoveUntil(
+                  Navigator.of(context).pushNamedAndRemoveUntil(
                     homeRoute,
                     (route) => false,
-                  );*/
+                  );
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
                     devtools.log("User not found");

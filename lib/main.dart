@@ -74,7 +74,7 @@ class _PulLeyState extends State<PulLey> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("hello"),
+        title: const Text(""),
       ),
     );
   }

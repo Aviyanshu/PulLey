@@ -73,18 +73,23 @@ class _RegisterViewState extends State<RegisterView> {
           children: [
             const Text('Name:'),
             TextFormField(
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(
+                labelText: 'Name',
+              ),
+              controller: _username,
               validator: (value) {
                 if (value != null && value.isEmpty) {
                   return 'Please enter a name';
                 }
-                _username.text = value!;
                 return null;
               },
             ),
             const Text('Email Address:'),
             TextFormField(
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(
+                labelText: 'Email',
+              ),
+              controller: _email,
               keyboardType: TextInputType.emailAddress,
               enableSuggestions: false,
               autocorrect: false,
@@ -92,7 +97,6 @@ class _RegisterViewState extends State<RegisterView> {
                 if (value != null && value.isEmpty) {
                   return 'Please enter a valid email';
                 }
-                _email.text = value!;
                 return null;
               },
             ),
@@ -101,6 +105,7 @@ class _RegisterViewState extends State<RegisterView> {
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
+              controller: _password,
               obscureText: true,
               enableSuggestions: false,
               autocorrect: false,
@@ -108,7 +113,6 @@ class _RegisterViewState extends State<RegisterView> {
                 if (value != null && value.isEmpty) {
                   return 'Please enter a strong password';
                 }
-                _password.text = value!;
                 return null;
               },
             ),
@@ -130,6 +134,11 @@ class _RegisterViewState extends State<RegisterView> {
                 final password = _password.text;
                 final role = _role.text;
 
+                final UserCredential =
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
                 final CollectionReference userCollection =
                     FirebaseFirestore.instance.collection('users');
                 try {
@@ -142,12 +151,47 @@ class _RegisterViewState extends State<RegisterView> {
                 } catch (e) {
                   devtools.log(e.toString());
                 }
+                final shouldRegister = await showDialogBox(context);
+                if (shouldRegister) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    loginRoute,
+                    (route) => false,
+                  );
+                }
               },
               child: const Text("Register"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  loginRoute,
+                  (route) => false,
+                );
+              },
+              child: const Text('Already registered? Login Here'),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+Future<bool> showDialogBox(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+          title: const Text("Registered"),
+          content: const Text("You have been registered succefully"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ]);
+    },
+  ).then((value) => value ?? false);
 }

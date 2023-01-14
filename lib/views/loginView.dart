@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:developer' as devtools show log;
 
 import 'package:pulley/route.dart';
 import 'package:pulley/views/registerView.dart';
+import 'package:pulley/perspective/enterPerspective.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -61,7 +63,62 @@ class _LoginViewState extends State<LoginView> {
               border: OutlineInputBorder(),
             ),
           ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+
+              try {
+                final UserCredential =
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const EnterPerspective()),
+                );
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'user-not-found') {
+                  devtools.log("User not found");
+                } else if (e.code == 'wrong-password') {
+                  devtools.log("Wrong Password");
+                }
+              }
+            },
+            child: const Text("Login"),
+          ),
           Container(
+            width: 200,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blueGrey,
+                width: 2,
+              ),
+            ),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    registerRoute,
+                    (route) => false,
+                  );
+                },
+                child: const Text("Not Registered? Click Here"),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+/*Container(
             width: 200,
             height: 50,
             decoration: BoxDecoration(
@@ -180,9 +237,4 @@ class _LoginViewState extends State<LoginView> {
                 child: const Text("Not Registered? Click Here"),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+          ),*/

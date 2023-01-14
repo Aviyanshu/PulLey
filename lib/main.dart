@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pulley/views/registerView.dart';
 
 import 'dart:developer' as devtools show log;
 
 import 'firebase_options.dart';
 import 'package:pulley/views/loginView.dart';
+import 'package:pulley/views/registerView.dart';
+import 'package:pulley/perspective/studentPerpestive/student.dart';
+import 'package:pulley/perspective/orgPerspective/organisation.dart';
+import 'package:pulley/perspective/clubPerspective/club.dart';
+import 'package:pulley/perspective/enterPerspective.dart';
 import 'package:pulley/route.dart';
 
 void main() {
@@ -22,6 +26,10 @@ void main() {
               title: 'This',
             ),
         registerRoute: (context) => const RegisterView(),
+        studentRoute: (context) => const Student(),
+        clubRoute: (context) => const Club(),
+        organisationRoute: (context) => const Organisation(),
+        enterPerspective: (context) => const EnterPerspective(),
       },
       debugShowCheckedModeBanner: false,
     ),
@@ -75,6 +83,32 @@ class _PulLeyState extends State<PulLey> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(""),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            const UserAccountsDrawerHeader(
+              accountName: Text("Avi"),
+              accountEmail: Text("avi@gmail.com"),
+            ),
+            ListTile(
+              title: const Text("Logout"),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  loginRoute,
+                  (route) => false,
+                );
+              },
+            ),
+            ListTile(
+                title: Text("This"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushNamed(registerRoute);
+                })
+          ],
+        ),
       ),
     );
   }

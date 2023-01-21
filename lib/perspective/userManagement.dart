@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pulley/perspective/studentPerpestive/student_homepage.dart';
+import 'package:pulley/perspective/studentPerpestive/student_mainpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/perspective/clubPerspective/club.dart';
 import 'package:pulley/perspective/orgPerspective/organisation.dart';
-import 'package:pulley/perspective/studentPerpestive/student.dart';
+import 'package:pulley/perspective/studentPerpestive/student_mainpage.dart';
 import 'package:pulley/route.dart';
 import 'dart:developer' as devtools show log;
 
@@ -25,7 +27,7 @@ class UserManagement {
         final data = doc_.data() as Map<String, dynamic>;
         final role = data['role'];
         if (role == 'Student') {
-          return const Student();
+          return const MainPage();
         } else if (role == 'Club') {
           return const Club();
         } else if (role == 'Organisation') {

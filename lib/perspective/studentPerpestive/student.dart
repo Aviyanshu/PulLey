@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pulley/route.dart';
 
 class Student extends StatefulWidget {
   const Student({super.key});
@@ -14,6 +17,20 @@ class _StudentState extends State<Student> {
       appBar: AppBar(
         title: const Text('Student'),
       ),
+      body: ElevatedButton(
+        onPressed: (() {
+          signout(context);
+        }),
+        child: const Text('Singout'),
+      ),
     );
   }
+}
+
+signout(BuildContext context) {
+  FirebaseAuth.instance.signOut();
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    loginRoute,
+    (route) => false,
+  );
 }

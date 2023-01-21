@@ -17,11 +17,11 @@ class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
   late final TextEditingController _role;
-  final Map<String, String> _roles = {
-    'student': 'student',
-    'club': 'club',
-    'organisation': 'organisation',
-  };
+  // final Map<String, String> _roles = {
+  //   'student': 'student',
+  //   'club': 'club',
+  //   'organisation': 'organisation',
+  // };
 
   @override
   void initState() {
@@ -58,14 +58,15 @@ class _RegisterViewState extends State<RegisterView> {
   ];
   String? _selectedValue;
 
-  final CollectionReference rolesCollection =
-      FirebaseFirestore.instance.collection('roles');
+  //final CollectionReference rolesCollection =
+  //FirebaseFirestore.instance.collection('roles');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("PulLey-Register"),
+        backgroundColor: const Color.fromARGB(255, 104, 200, 222),
       ),
       body: Form(
         key: _formKey,
@@ -133,30 +134,38 @@ class _RegisterViewState extends State<RegisterView> {
                 final email = _email.text;
                 final password = _password.text;
                 final role = _role.text;
-
-                final UserCredential =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
-                final CollectionReference userCollection =
-                    FirebaseFirestore.instance.collection('users');
                 try {
-                  await userCollection.add({
-                    'username': username,
-                    'email': email,
-                    'password': password,
-                    'role': role
-                  });
+                  final userCredential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                  devtools.log(userCredential.toString());
+                  User user = await FirebaseAuth.instance.currentUser!;
+                  final CollectionReference userCollection =
+                      FirebaseFirestore.instance.collection('users');
+                  try {
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user.uid)
+                        .set({
+                      'username': username,
+                      'email': email,
+                      'password': password,
+                      'role': role,
+                    });
+                  } catch (e) {
+                    devtools.log(e.toString());
+                  }
+                  final shouldRegister = await showDialogBox(context);
+                  if (shouldRegister) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      loginRoute,
+                      (route) => false,
+                    );
+                  }
                 } catch (e) {
                   devtools.log(e.toString());
-                }
-                final shouldRegister = await showDialogBox(context);
-                if (shouldRegister) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute,
-                    (route) => false,
-                  );
                 }
               },
               child: const Text("Register"),
@@ -173,6 +182,7 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
       ),
+      backgroundColor: Colors.white,
     );
   }
 }
@@ -180,10 +190,11 @@ class _RegisterViewState extends State<RegisterView> {
 Future<bool> showDialogBox(BuildContext context) {
   return showDialog(
     context: context,
+    barrierColor: const Color.fromARGB(255, 104, 200, 222),
     builder: (context) {
       return AlertDialog(
           title: const Text("Registered"),
-          content: const Text("You have been registered succefully"),
+          content: const Text("You have been registered successfully"),
           actions: <Widget>[
             TextButton(
               onPressed: () {

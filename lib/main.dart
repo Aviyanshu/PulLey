@@ -1,20 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'firebase_options.dart';
 
 import 'dart:developer' as devtools show log;
 
-import 'firebase_options.dart';
 import 'package:pulley/views/loginView.dart';
 import 'package:pulley/views/registerView.dart';
 import 'package:pulley/perspective/studentPerpestive/student.dart';
 import 'package:pulley/perspective/orgPerspective/organisation.dart';
 import 'package:pulley/perspective/clubPerspective/club.dart';
-import 'package:pulley/perspective/enterPerspective.dart';
 import 'package:pulley/route.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(
     MaterialApp(
       title: "PulLey App",
@@ -29,12 +29,13 @@ void main() {
         studentRoute: (context) => const Student(),
         clubRoute: (context) => const Club(),
         organisationRoute: (context) => const Organisation(),
-        enterPerspective: (context) => const EnterPerspective(),
       },
       debugShowCheckedModeBanner: false,
     ),
   );
 }
+
+//widget test ma MyApp lai const bata not const banao chha
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -102,7 +103,7 @@ class _PulLeyState extends State<PulLey> {
               },
             ),
             ListTile(
-                title: Text("This"),
+                title: const Text("This"),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pushNamed(registerRoute);

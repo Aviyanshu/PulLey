@@ -4,4 +4,3 @@ const homeRoute = '/home';
 const studentRoute = '/student';
 const clubRoute = "/club";
 const organisationRoute = '/organisation';
-const enterPerspective = 'enterPerspective';

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pulley/route.dart';
 
 class Organisation extends StatefulWidget {
   const Organisation({super.key});
@@ -14,6 +16,20 @@ class _OrganisationState extends State<Organisation> {
       appBar: AppBar(
         title: const Text('Organisation'),
       ),
+      body: ElevatedButton(
+        onPressed: (() {
+          signout(context);
+        }),
+        child: const Text('Singout'),
+      ),
     );
   }
+}
+
+signout(context) {
+  FirebaseAuth.instance.signOut();
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    loginRoute,
+    (route) => false,
+  );
 }

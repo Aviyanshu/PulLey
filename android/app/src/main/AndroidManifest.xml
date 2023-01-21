@@ -25,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.firebase.api-key"
+            android:value="AIzaSyBfJ5222xxUO0uSt9Y-cuSX62sUYyXZXRA" />
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

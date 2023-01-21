@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer' as devtools show log;
 
 import 'package:pulley/route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -72,6 +73,8 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setBool('isLoggedIn', true);
                 User userLoggedin = FirebaseAuth.instance.currentUser!;
                 final DocumentSnapshot doc_ = await FirebaseFirestore.instance
                     .collection('users')

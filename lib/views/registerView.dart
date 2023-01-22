@@ -51,7 +51,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Text('Club'),
     ),
     const DropdownMenuItem(
-      value: 'Orgaisation',
+      value: 'Organisation',
       child: Text('Organisation'),
     ),
     // Add more options
@@ -193,16 +193,17 @@ Future<bool> showDialogBox(BuildContext context) {
     barrierColor: const Color.fromARGB(255, 104, 200, 222),
     builder: (context) {
       return AlertDialog(
-          title: const Text("Registered"),
-          content: const Text("You have been registered successfully"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("OK"),
-            ),
-          ]);
+        title: const Text("Registered"),
+        content: const Text("You have been registered successfully"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("OK"),
+          ),
+        ],
+      );
     },
   ).then((value) => value ?? false);
 }

@@ -87,9 +87,9 @@ class _LoginViewState extends State<LoginView> {
                   final data = doc_.data() as Map<String, dynamic>;
                   final role = data['role'];
                   devtools.log(role);
-                  if (role == 'Student') {
+                  if (role == 'Organisation') {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      studentRoute,
+                      organisationRoute,
                       (route) => false,
                     );
                   } else if (role == 'Club') {
@@ -97,9 +97,9 @@ class _LoginViewState extends State<LoginView> {
                       clubRoute,
                       (route) => false,
                     );
-                  } else if (role == 'Organisation') {
+                  } else if (role == 'Student') {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      organisationRoute,
+                      studentRoute,
                       (route) => false,
                     );
                   }
@@ -116,33 +116,14 @@ class _LoginViewState extends State<LoginView> {
             },
             child: const Text("Sign in"),
           ),
-          Container(
-            width: 200,
-            height: 50,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.blueGrey,
-                width: 2,
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    registerRoute,
-                    (route) => false,
-                  );
-                },
-                child: const Text("Not Registered? Click Here"),
-              ),
-            ),
-          ),
           TextButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                registerRoute,
+                (route) => false,
+              );
             },
-            child: const Text('Sign out'),
+            child: const Text("Not Registered? Click Here"),
           ),
         ],
       ),
@@ -169,4 +150,24 @@ roleBased(BuildContext context, User user) {
         }
         return const Text('LOADING...');
       });
+}
+
+Future<bool> showDialogBox(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierColor: const Color.fromARGB(255, 104, 200, 222),
+    builder: (context) {
+      return AlertDialog(
+          title: const Text("Error"),
+          content: const Text("Username or Password incorrect"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ]);
+    },
+  ).then((value) => value ?? false);
 }

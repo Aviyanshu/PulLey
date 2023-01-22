@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Organisation extends StatefulWidget {
   const Organisation({super.key});
@@ -26,8 +27,10 @@ class _OrganisationState extends State<Organisation> {
   }
 }
 
-signout(context) {
+signout(BuildContext context) async {
   FirebaseAuth.instance.signOut();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('isLoggedIn', false);
   Navigator.of(context).pushNamedAndRemoveUntil(
     loginRoute,
     (route) => false,

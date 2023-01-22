@@ -1,29 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 import 'package:pulley/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Club extends StatefulWidget {
-  const Club({super.key});
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
 
   @override
-  State<Club> createState() => _ClubState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _ClubState extends State<Club> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Club'),
-      ),
-      body: ElevatedButton(
-        onPressed: (() {
-          signout(context);
-        }),
-        child: const Text('Singout'),
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Settings Page"),
+        ),
+        body: ElevatedButton(
+          onPressed: (() {
+            signout(context);
+          }),
+          child: const Text('Singout'),
+        ));
   }
 }
 

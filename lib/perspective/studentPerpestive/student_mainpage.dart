@@ -32,6 +32,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:_pages[_selectedIndex],
+      backgroundColor: llightblueColor,
       bottomNavigationBar: Container(
         color: llightblueColor,
         child: Padding(

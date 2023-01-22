@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pulley/perspective/clubPerspective/club_mainpage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_homepage.dart';
 import 'package:pulley/perspective/userManagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +13,7 @@ import 'package:pulley/views/loginView.dart';
 import 'package:pulley/views/registerView.dart';
 import 'package:pulley/perspective/studentPerpestive/student_mainpage.dart';
 import 'package:pulley/perspective/orgPerspective/organisation.dart';
-import 'package:pulley/perspective/clubPerspective/club.dart';
+import 'package:pulley/perspective/clubPerspective/club_homepage.dart';
 import 'package:pulley/route.dart';
 
 void main() async {
@@ -25,8 +26,8 @@ void main() async {
       routes: {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
-        studentRoute: (context) => const MainPage(),
-        clubRoute: (context) => const Club(),
+        studentRoute: (context) => const StudentMainPage(),
+        clubRoute: (context) => const ClubMainPage(),
         organisationRoute: (context) => const Organisation(),
       },
       debugShowCheckedModeBanner: false,

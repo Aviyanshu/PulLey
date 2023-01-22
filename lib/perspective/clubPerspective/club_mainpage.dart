@@ -10,19 +10,21 @@ import 'package:pulley/perspective/studentPerpestive/students_jobspage.dart';
 import 'package:pulley/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'club_homepage.dart';
 
-class StudentMainPage extends StatefulWidget {
-  const StudentMainPage({super.key});
+
+class ClubMainPage extends StatefulWidget {
+  const ClubMainPage({super.key});
 
   @override
-  State<StudentMainPage> createState() => _MainPageState();
+  State<ClubMainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<StudentMainPage> {
+class _MainPageState extends State<ClubMainPage> {
   int _selectedIndex=0;
 
   final List<Widget> _pages=[
-    StudentHomePage(),
+    ClubHomePage(),
     EventsPage(),
     JobsPage(),
     SettingsPage(),
@@ -64,5 +66,4 @@ class _MainPageState extends State<StudentMainPage> {
     );
   }
 }
-
 

@@ -59,77 +59,81 @@ class _ClubHomePageState extends State<ClubHomePage> {
           },
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            const Text('Event Name'),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Event Name'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a name for the event';
-                }
-                return null;
-              },
-              onSaved: (value) => _eventName = value!,
-            ),
-            const Text('Event Location'),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Event Location'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a location for the event';
-                }
-                return null;
-              },
-              onSaved: (value) => _eventLocation = value!,
-            ),
-            const Text('Event Date'),
-            TextFormField(
-              decoration:
-                  const InputDecoration(labelText: 'Event Date (YYYY-MM-DD)'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a date for the event';
-                }
-                return null;
-              },
-              onSaved: (value) => _eventDate = value!,
-            ),
-            const Text('Event Time'),
-            TextFormField(
-              decoration:
-                  const InputDecoration(labelText: 'Event Time (HH:MM)'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a time for the event';
-                }
-                return null;
-              },
-              onSaved: (value) => _eventTime = value!,
-            ),
-            const Text('Event Description'),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Event Description'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please enter your event's description";
-                }
-                return null;
-              },
-              onSaved: (value) => _eventDescription = value!,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  _saveEventToFirebase();
-                }
-              },
-              child: const Text('Add Event'),
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              const Text('Event Name'),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Event Name'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a name for the event';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _eventName = value!,
+              ),
+              const Text('Event Location'),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Event Location'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a location for the event';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _eventLocation = value!,
+              ),
+              const Text('Event Date'),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Event Date (YYYY-MM-DD)'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a date for the event';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _eventDate = value!,
+              ),
+              const Text('Event Time'),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Event Time (HH:MM)'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a time for the event';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _eventTime = value!,
+              ),
+              const Text('Event Description'),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Event Description'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter your event's description";
+                  }
+                  return null;
+                },
+                onSaved: (value) => _eventDescription = value!,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    final showDialogBox =
+                        await showDialogBoxForEventAdded(context);
+                  }
+                },
+                child: const Text('Add Event'),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -141,7 +141,7 @@ class _RegisterViewState extends State<RegisterView> {
                     password: password,
                   );
                   devtools.log(userCredential.toString());
-                  User user = await FirebaseAuth.instance.currentUser!;
+                  User user = FirebaseAuth.instance.currentUser!;
                   final CollectionReference userCollection =
                       FirebaseFirestore.instance.collection('users');
                   try {
@@ -170,14 +170,17 @@ class _RegisterViewState extends State<RegisterView> {
               },
               child: const Text("Register"),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  loginRoute,
-                  (route) => false,
-                );
-              },
-              child: const Text('Already registered? Login Here'),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    loginRoute,
+                    (route) => false,
+                  );
+                },
+                child: const Text('Already registered? Login Here'),
+              ),
             ),
           ],
         ),
@@ -199,6 +202,10 @@ Future<bool> showDialogBox(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                loginRoute,
+                (route) => false,
+              );
             },
             child: const Text("OK"),
           ),

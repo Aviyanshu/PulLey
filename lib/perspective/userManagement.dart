@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pulley/perspective/orgPerspective/org_mainpage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_homepage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_mainpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/perspective/clubPerspective/club_homepage.dart';
-import 'package:pulley/perspective/orgPerspective/organisation.dart';
+import 'package:pulley/perspective/orgPerspective/org_mainpage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_mainpage.dart';
 import 'package:pulley/route.dart';
 import 'dart:developer' as devtools show log;
@@ -33,7 +34,7 @@ class UserManagement {
         } else if (role == 'Club') {
           return const ClubMainPage();
         } else if (role == 'Organisation') {
-          return const Organisation();
+          return const OrganisationMainPage();
         } else {
           devtools.log('Error');
         }

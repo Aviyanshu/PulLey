@@ -1,29 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:pulley/Colors.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/src/widgets/image.dart';
 
-class JobsPage extends StatefulWidget {
-  const JobsPage({super.key});
+class OrganisationHomePage extends StatelessWidget {
+  const OrganisationHomePage({super.key});
 
-  @override
-  State<JobsPage> createState() => _JobsPageState();
-}
-
-class _JobsPageState extends State<JobsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("PulLey"),
-          centerTitle: true,
           backgroundColor: darkBlueColor,
-          foregroundColor: lightblueColor,
-        ),
-        backgroundColor: llightblueColor,
-        body:_buildVacancyList(),
-        );
+          foregroundColor: llightblueColor,
+          centerTitle: true,
+          title: const Text('PulLey'),
+          ),
+          backgroundColor: llightblueColor,
+      body: _buildVacancyList(),
+    );
   }
 }
 
@@ -60,3 +55,4 @@ Widget _buildVacancyList() {
     },
   );
 }
+

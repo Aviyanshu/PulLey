@@ -1,14 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pulley/Colors.dart';
-import 'package:pulley/perspective/studentPerpestive/student_eventspage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_homepage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_settingspage.dart';
 import 'package:pulley/perspective/studentPerpestive/students_jobspage.dart';
-import 'package:pulley/route.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class StudentMainPage extends StatefulWidget {
@@ -23,7 +18,6 @@ class _MainPageState extends State<StudentMainPage> {
 
   final List<Widget> _pages=[
     StudentHomePage(),
-    EventsPage(),
     JobsPage(),
     SettingsPage(),
   ];
@@ -52,8 +46,6 @@ class _MainPageState extends State<StudentMainPage> {
             tabs: const [
             GButton(icon: Icons.home,
             text:'Home',),
-            GButton(icon: Icons.event,
-            text:'Events'),
             GButton(icon: Icons.business,
             text:'Jobs'),
             GButton(icon: Icons.settings,

@@ -5,14 +5,14 @@ import 'package:pulley/perspective/orgPerspective/org_mainpage.dart';
 import 'package:pulley/route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ClubSettingsPage extends StatefulWidget {
-  const ClubSettingsPage({super.key});
+class OrganisationSettings extends StatefulWidget {
+  const OrganisationSettings({super.key});
 
   @override
-  State<ClubSettingsPage> createState() => _OrganisationSettingsState();
+  State<OrganisationSettings> createState() => _OrganisationSettingsState();
 }
 
-class _OrganisationSettingsState extends State<ClubSettingsPage> {
+class _OrganisationSettingsState extends State<OrganisationSettings> {
   bool valNotify1 = true;
   bool valNotify2 = false;
   bool valNotify3 = false;

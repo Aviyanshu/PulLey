@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pulley/Colors.dart';
-import 'package:pulley/perspective/studentPerpestive/student_eventspage.dart';
+import 'package:pulley/perspective/clubPerspective/club_eventspage.dart';
+import 'package:pulley/perspective/clubPerspective/club_settingspage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_homepage.dart';
 import 'package:pulley/perspective/studentPerpestive/student_settingspage.dart';
 import 'package:pulley/perspective/studentPerpestive/students_jobspage.dart';
@@ -25,9 +26,8 @@ class _MainPageState extends State<ClubMainPage> {
 
   final List<Widget> _pages=[
     ClubHomePage(),
-    EventsPage(),
-    JobsPage(),
-    SettingsPage(),
+    ClubEventsPage(),
+    ClubSettingsPage(),
   ];
 
   @override
@@ -56,8 +56,6 @@ class _MainPageState extends State<ClubMainPage> {
             text:'Home',),
             GButton(icon: Icons.event,
             text:'Events'),
-            GButton(icon: Icons.business,
-            text:'Jobs'),
             GButton(icon: Icons.settings,
             text:'Settings'),
           ]),

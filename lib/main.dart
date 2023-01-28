@@ -74,6 +74,13 @@ class _PulLeyState extends State<PulLey> {
               return Container(child: snapshot.data);
             case ConnectionState.waiting:
               return const CircularProgressIndicator();
+            /* () async {
+                final showIndicator = await showProgressDialog();
+                //};
+                return showIndicator;
+              };
+              break; */
+
             default:
               return const LoginView();
           }
@@ -82,5 +89,25 @@ class _PulLeyState extends State<PulLey> {
     } else {
       return const LoginView();
     }
+  }
+
+  Future<Widget> showProgressDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                CircularProgressIndicator(),
+                SizedBox(height: 10),
+                Text('Please wait'),
+              ],
+            ),
+          ),
+        );
+      },
+    ) as Widget;
   }
 }

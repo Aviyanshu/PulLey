@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/Colors.dart';
 import 'package:pulley/perspective/clubPerspective/club_mainpage.dart';
@@ -22,11 +23,11 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
   late String _eventTime;
   late String _eventDescription;
 
-  TextEditingController _eventnamecontroller=TextEditingController();
-  TextEditingController _eventlocationcontroller=TextEditingController();
-  TextEditingController _eventdatecontroller=TextEditingController();
-  TextEditingController _eventtimecontroller=TextEditingController();
-  TextEditingController _eventdescriptioncontroller=TextEditingController();
+  TextEditingController _eventnamecontroller = TextEditingController();
+  TextEditingController _eventlocationcontroller = TextEditingController();
+  TextEditingController _eventdatecontroller = TextEditingController();
+  TextEditingController _eventtimecontroller = TextEditingController();
+  TextEditingController _eventdescriptioncontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +42,7 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Align(
-          alignment: Alignment.topCenter,
-          child: _buildAdminEventInput()
-        ),
+            alignment: Alignment.topCenter, child: _buildAdminEventInput()),
       ),
     );
   }
@@ -56,19 +55,20 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _eventnamecontroller,
                 cursorColor: darkBlueColor,
-                decoration: InputDecoration(hintText: 'Event Name',
-                enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    focusedBorder: OutlineInputBorder(
+                decoration: InputDecoration(
+                  hintText: 'Event Name',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 2, color: darkBlueColor),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                     ),
+                      borderRadius: BorderRadius.circular(20)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a name for the event';
@@ -77,19 +77,20 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
                 },
                 onSaved: (value) => _eventName = value!,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _eventlocationcontroller,
-                 cursorColor: darkBlueColor,
-                decoration: InputDecoration(hintText: 'Event Location',
-                enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    focusedBorder: OutlineInputBorder(
+                cursorColor: darkBlueColor,
+                decoration: InputDecoration(
+                  hintText: 'Event Location',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 2, color: darkBlueColor),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                     ),
+                      borderRadius: BorderRadius.circular(20)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a location for the event';
@@ -98,19 +99,20 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
                 },
                 onSaved: (value) => _eventLocation = value!,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _eventdatecontroller,
-                 cursorColor: darkBlueColor,
-                decoration: InputDecoration(hintText: 'Event Date (YYYY-MM-DD)',
-                enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    focusedBorder: OutlineInputBorder(
+                cursorColor: darkBlueColor,
+                decoration: InputDecoration(
+                  hintText: 'Event Date (YYYY-MM-DD)',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 2, color: darkBlueColor),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                     ),
+                      borderRadius: BorderRadius.circular(20)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a date for the event';
@@ -119,19 +121,20 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
                 },
                 onSaved: (value) => _eventDate = value!,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _eventtimecontroller,
-                 cursorColor: darkBlueColor,
-                decoration: InputDecoration(hintText: 'Event Time (HH:MM)',
-                enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    focusedBorder: OutlineInputBorder(
+                cursorColor: darkBlueColor,
+                decoration: InputDecoration(
+                  hintText: 'Event Time (HH:MM)',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 2, color: darkBlueColor),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                     ),
+                      borderRadius: BorderRadius.circular(20)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a time for the event';
@@ -140,19 +143,20 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
                 },
                 onSaved: (value) => _eventTime = value!,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _eventdescriptioncontroller,
-                 cursorColor: darkBlueColor,
-                decoration: InputDecoration(hintText: 'Event Description',
-                enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    focusedBorder: OutlineInputBorder(
+                cursorColor: darkBlueColor,
+                decoration: InputDecoration(
+                  hintText: 'Event Description',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(width: 2, color: darkBlueColor),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                     ),
+                      borderRadius: BorderRadius.circular(20)),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Please enter your event's description";
@@ -161,7 +165,9 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
                 },
                 onSaved: (value) => _eventDescription = value!,
               ),
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
               FloatingActionButton.extended(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
@@ -177,7 +183,7 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
                   _eventtimecontroller.clear();
                 },
                 label: const Text('Add Event'),
-                icon:Icon(Icons.add),
+                icon: Icon(Icons.add),
                 backgroundColor: darkBlueColor,
                 foregroundColor: lightblueColor,
               )
@@ -190,13 +196,16 @@ class _ClubEventsPageState extends State<ClubEventsPage> {
 
   _saveEventToFirebase() async {
     // Create a new document in the events collection
+    User user = FirebaseAuth.instance.currentUser!;
     DocumentReference ref =
         await FirebaseFirestore.instance.collection('_Events_').add({
+      'user': user.uid,
       'name': _eventName,
       'location': _eventLocation,
       'date': _eventDate,
       'time': _eventTime,
       'description': _eventDescription,
+      'active': 'isActive',
     });
     devtools.log("Event added");
   }

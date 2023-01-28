@@ -2,24 +2,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/Colors.dart';
 
+import '../../Extras/searchscreen.dart';
+
 class StudentHomePage extends StatelessWidget {
   const StudentHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("PulLey"),
-          centerTitle: true,
-          backgroundColor: darkBlueColor,
-          foregroundColor: lightblueColor,
-        ),
-        backgroundColor: llightblueColor,
-        body:_buildEventList(),
-        );
+      appBar: AppBar(
+        title: const Text("PulLey"),
+        centerTitle: false,
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchScreen()));
+              })
+        ],
+        backgroundColor: darkBlueColor,
+        foregroundColor: lightblueColor,
+      ),
+      backgroundColor: llightblueColor,
+      body: _buildEventList(),
+    );
   }
 }
-
 
 Widget _buildEventList() {
   return StreamBuilder<QuerySnapshot>(
@@ -38,23 +47,39 @@ Widget _buildEventList() {
           String eventLocation = (events[index].data() as dynamic)['location'];
           String eventDate = (events[index].data() as dynamic)['date'];
           String eventTime = (events[index].data() as dynamic)['time'];
-          String eventDescription=(events[index].data() as dynamic)['description'];
-          return Container(
-            margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-            child: ListTile(
-              title: Text(eventName,style: (TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: darkBlueColor)),),
-              subtitle: Text("Location:$eventLocation\nDate:$eventDate\nTime:$eventTime\nDescription:$eventDescription\n"),
-              shape: RoundedRectangleBorder(
-              side: BorderSide(width: 2, color: darkBlueColor),
-              borderRadius: BorderRadius.circular(10),
-  ),
-            ),
-          );
+          String eventDescription =
+              (events[index].data() as dynamic)['description'];
+          String eventActive = (events[index].data() as dynamic)['active'];
+          if (eventActive == 'isActive') {
+            return Container(
+              margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+              child: ListTile(
+                title: Text(
+                  eventName,
+                  style: (TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: darkBlueColor)),
+                ),
+                subtitle: Text(
+                    "Location:$eventLocation\nDate:$eventDate\nTime:$eventTime\nDescription:$eventDescription\n"),
+                trailing: IconButton(
+                    icon: Icon(Icons.comment),
+                    onPressed: () {
+                      /* Navigator.push(
+                    context,
+                    MaterialPageRoute(builder:(context) => CommentsScreen(postId: null,))
+                  ); */
+                    }),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 2, color: darkBlueColor),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            );
+          }
         },
       );
     },
   );
 }
-
-
-

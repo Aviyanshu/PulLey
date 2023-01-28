@@ -22,7 +22,7 @@ class UserManagement {
       return const LoginView();
     } else {
       final DocumentSnapshot doc_ = await FirebaseFirestore.instance
-          .collection('users')
+          .collection('Users')
           .doc(user.uid)
           .get();
       if (doc_.exists) {

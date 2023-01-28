@@ -20,6 +20,7 @@ class _JobsPageState extends State<JobsPage> {
       appBar: AppBar(
         title: const Text("PulLey"),
         centerTitle: false,
+<<<<<<< Updated upstream
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.search),
@@ -28,6 +29,8 @@ class _JobsPageState extends State<JobsPage> {
                     MaterialPageRoute(builder: (context) => SearchScreen()));
               })
         ],
+=======
+>>>>>>> Stashed changes
         backgroundColor: darkBlueColor,
         foregroundColor: lightblueColor,
       ),
@@ -68,6 +71,7 @@ Widget _buildVacancyList() {
                     color: darkBlueColor)),
               ),
               subtitle: Text(
+<<<<<<< Updated upstream
                   "Qualifications: $qualifications\nDeadline: $deadline\nDescription: $description\n"),
               trailing: IconButton(
                   icon: Icon(Icons.comment),
@@ -77,10 +81,30 @@ Widget _buildVacancyList() {
                     MaterialPageRoute(builder:(context) => CommentsScreen(postId: null,))
                   ); */
                   }),
+=======
+                  "Qualifications: $qualifications\nDeadline: $deadline\nDescription: $description\nSalary: $salary"),
+>>>>>>> Stashed changes
               shape: RoundedRectangleBorder(
                 side: BorderSide(width: 2, color: darkBlueColor),
                 borderRadius: BorderRadius.circular(10),
               ),
+<<<<<<< Updated upstream
+=======
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  /*  LikeAnimation(
+                    isAnimating: snap['likes'].contains(user.uid),
+                    smallLike: true, */
+                  IconButton(
+                      icon: Icon(Icons.favorite_border), onPressed: () {}),
+                  IconButton(
+                    icon: Icon(Icons.comment),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+>>>>>>> Stashed changes
             ),
           );
         },

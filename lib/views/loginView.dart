@@ -276,7 +276,11 @@ class _LoginViewState extends State<LoginView> {
 //                     prefs.setBool('isLoggedIn', true);
 //                     User userLoggedin = FirebaseAuth.instance.currentUser!;
 //                     final DocumentSnapshot doc_ = await FirebaseFirestore.instance
+<<<<<<< Updated upstream
 //                         .collection('users')
+=======
+//                         .collection('Users')
+>>>>>>> Stashed changes
 //                         .doc(userLoggedin.uid)
 //                         .get();
 //                     devtools.log(userLoggedin.uid);

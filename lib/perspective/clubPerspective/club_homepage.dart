@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/Colors.dart';
+import 'package:pulley/Extras/searchscreen.dart';
 
 import '../../Extras/searchscreen.dart';
 
@@ -72,6 +73,7 @@ Widget _buildEventList() {
           String eventTime = (events[index].data() as dynamic)['time'];
           String eventDescription =
               (events[index].data() as dynamic)['description'];
+<<<<<<< Updated upstream
           String eventActive = (events[index].data() as dynamic)['active'];
           final documentID = events[index].id;
           User user = FirebaseAuth.instance.currentUser!;
@@ -140,11 +142,46 @@ Widget _buildEventList() {
           } else {
             return Container();
           }
+=======
+          return Container(
+            margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+            child: ListTile(
+              title: Text(
+                eventName,
+                style: (TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: darkBlueColor)),
+              ),
+              subtitle: Text(
+                  "Location:$eventLocation\nDate:$eventDate\nTime:$eventTime\nDescription:$eventDescription\n"),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(width: 2, color: darkBlueColor),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  /*  LikeAnimation(
+                    isAnimating: snap['likes'].contains(user.uid),
+                    smallLike: true, */
+                  IconButton(
+                      icon: Icon(Icons.favorite_border), onPressed: () {}),
+                  IconButton(
+                    icon: Icon(Icons.comment),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          );
+>>>>>>> Stashed changes
         },
       );
     },
   );
 }
+<<<<<<< Updated upstream
 
 /* _showDeleteDialog(int index) {
   showDialog(
@@ -200,3 +237,5 @@ trailing: PopupMenuButton<MenuAction>(
                 ),
 
  */
+=======
+>>>>>>> Stashed changes

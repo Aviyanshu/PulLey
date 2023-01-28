@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pulley/Colors.dart';
+<<<<<<< Updated upstream
 import 'package:bcrypt/bcrypt.dart';
+=======
+>>>>>>> Stashed changes
 import 'dart:developer' as devtools show log;
 
 import '../route.dart';
@@ -205,8 +208,11 @@ class _RegisterViewState extends State<RegisterView> {
                                       final email = _email.text;
                                       final password = _password.text;
                                       final role = _role.text;
+<<<<<<< Updated upstream
                                       final hashPassword = BCrypt.hashpw(
                                           password, BCrypt.gensalt());
+=======
+>>>>>>> Stashed changes
                                       try {
                                         final userCredential =
                                             await FirebaseAuth.instance
@@ -228,7 +234,11 @@ class _RegisterViewState extends State<RegisterView> {
                                               .set({
                                             'username': username,
                                             'email': email,
+<<<<<<< Updated upstream
                                             'password': hashPassword,
+=======
+                                            'password': password,
+>>>>>>> Stashed changes
                                             'role': role,
                                           });
                                         } catch (e) {
@@ -398,10 +408,17 @@ class _RegisterViewState extends State<RegisterView> {
 //                           devtools.log(userCredential.toString());
 //                           User user = await FirebaseAuth.instance.currentUser!;
 //                           final CollectionReference userCollection =
+<<<<<<< Updated upstream
 //                               FirebaseFirestore.instance.collection('users');
 //                           try {
 //                             FirebaseFirestore.instance
 //                                 .collection('users')
+=======
+//                               FirebaseFirestore.instance.collection('Users');
+//                           try {
+//                             FirebaseFirestore.instance
+//                                 .collection('Users')
+>>>>>>> Stashed changes
 //                                 .doc(user.uid)
 //                                 .set({
 //                               'username': username,
